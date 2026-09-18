@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  color-scheme: dark;
+  --void: #060a0e;
+  --panel: #0d151b;
+  --panel-line: #16232b;
+  --cyan: #4fd8ff;
+  --cyan-dim: #1c4f61;
+  --cyan-glow: rgba(79, 216, 255, 0.35);
+  --warm: #ffb454;
+  --text: #e6f4f9;
+  --text-dim: #6f8e9a;
+  --danger: #ff5f56;
+  font-family: 'IBM Plex Mono', -apple-system, "Segoe UI", monospace;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(79, 216, 255, 0.07), transparent 60%),
+    var(--void);
+  color: var(--text);
+}
+
+.app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 20px 24px;
+  box-sizing: border-box;
+}
+
+/* HUD corner brackets */
+.app::before,
+.app::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+.app::before {
+  top: 10px;
+  left: 10px;
+  border-top: 2px solid var(--cyan);
+  border-left: 2px solid var(--cyan);
+}
+.app::after {
+  bottom: 10px;
+  right: 10px;
+  border-bottom: 2px solid var(--cyan);
+  border-right: 2px solid var(--cyan);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--panel-line);
+}
+
+h1 {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 0.06em;
+  margin: 0;
+  color: var(--cyan);
+  text-shadow: 0 0 12px var(--cyan-glow);
+}
+
+.status {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 6px 1px var(--cyan-glow);
+}
+
+.chat-log {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-right: 4px;
+}
+
+.chat-log::-webkit-scrollbar {
+  width: 4px;
+}
+.chat-log::-webkit-scrollbar-thumb {
+  background: var(--cyan-dim);
+}
+
+.empty-hint {
+  color: var(--text-dim);
+  text-align: center;
+  margin-top: 40px;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.bubble {
+  max-width: 78%;
+  padding: 10px 14px;
+  line-height: 1.5;
+  font-size: 0.92rem;
+  border-radius: 2px;
+}
+
+.bubble-user {
+  align-self: flex-end;
+  background: var(--panel);
+  border: 1px solid var(--cyan-dim);
+  color: var(--text);
+}
+
+.bubble-assistant {
+  align-self: flex-start;
+  background: rgba(79, 216, 255, 0.06);
+  border-left: 2px solid var(--cyan);
+  color: var(--text);
+}
+
+.mic-button {
+  position: relative;
+  padding: 18px;
+  border-radius: 50%;
+  border: 1px solid var(--cyan);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  background: var(--panel);
+  color: var(--cyan);
+  box-shadow: 0 0 0 0 var(--cyan-glow);
+}
+
+.mic-recording {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: var(--void);
+  animation: pulse-ring 1.4s ease-out infinite;
+}
+
+.mic-thinking,
+.mic-speaking {
+  background: var(--panel);
+  border-color: var(--panel-line);
+  color: var(--text-dim);
+  cursor: not-allowed;
+}
+
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(255, 95, 86, 0.5); }
+  70%  { box-shadow: 0 0 0 14px rgba(255, 95, 86, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 95, 86, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mic-recording { animation: none; }
+}
+
+.text-input-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.text-input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 2px;
+  border: 1px solid var(--panel-line);
+  background: var(--panel);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.92rem;
+}
+
+.text-input:focus {
+  outline: none;
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 1px var(--cyan-glow);
+}
+
+.text-input:disabled {
+  opacity: 0.4;
+}
+
+.text-send-button {
+  padding: 10px 18px;
+  border-radius: 2px;
+  border: 1px solid var(--cyan);
+  background: transparent;
+  color: var(--cyan);
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.text-send-button:hover:not(:disabled) {
+  background: var(--cyan);
+  color: var(--void);
+}
+
+.text-send-button:disabled {
+  border-color: var(--panel-line);
+  color: var(--text-dim);
+  cursor: not-allowed;
+}
